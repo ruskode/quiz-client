@@ -51,7 +51,7 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
     // bottom: 0;
 
     transform: translateX(-50%) !important;
-    top: 54%;
+    top: 56%;
     left: 50%;
     width: 600px;
     max-width: 600px;
