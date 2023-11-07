@@ -143,7 +143,7 @@ const startAnimations = () => {
   <div
     class="game-start bg-#fff h-full w-screen overflow-hidden flex items-center justify-center"
     :class="[{ 'bg-#71CB8A! game': gameStarted && currentQuestion && currentQuestion.type !== 'VALUE' }, { 'bg-#1E2947! bg-super': currentQuestion && currentQuestion.type === 'VALUE' }]">
-    <button class="text-black fixed top-20px left-50% z-9999" @click="pause">pause</button>
+    <!-- <button class="text-black fixed top-20px left-50% z-9999" @click="pause">pause</button> -->
     <!-- <button @click="getNextQuestion" class="text-black fixed top-20px left-60% z-9999">next question</button> -->
 
     <a href="https://kantiana.ru" target="_blank" class="absolute bottom-40px left-50% translate-x-[-50%] lt-sm:w-150px">
