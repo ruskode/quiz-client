@@ -587,7 +587,7 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
   }
   .final_timeout_window {
     width: 60vw !important;
-    padding: 5%;
+    padding: 16px 18px !important;
   }
   .final_timeout_window_title {
     font-size: 20px !important;
@@ -598,7 +598,7 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
   }
   .final_timeout_window_button {
     padding: 0px;
-    margin-top: 10px;
+    margin-top: 22px;
     max-width: 37dvw;
   }
   .final_timeout_window_button_title {
@@ -706,7 +706,7 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
   }
   .final_timeout_window_description {
     font-size: 14px !important;
-    margin-top: 15px;
+    margin-top: 16px;
   }
   .final_timeout_window_button {
     width: 48dvw !important;

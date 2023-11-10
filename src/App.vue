@@ -21,7 +21,7 @@ onMounted(() => {
 })
 
 useHead({
-  title: 'Vitesse',
+  title: 'Результат Квиза',
   meta: [{ name: 'description', content: 'Opinionated Vite Starter Template' }],
   link: [
     {

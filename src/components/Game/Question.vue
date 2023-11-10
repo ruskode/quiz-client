@@ -7,6 +7,10 @@ const { counter, pause, resume, reset, isActive } = useInterval(1000, {
   controls: true,
 })
 pause()
+const windowWidth = ref()
+onMounted(() => {
+  windowWidth.value = window.innerWidth
+})
 
 const router = useRouter()
 
@@ -277,7 +281,6 @@ const goToStart = () => {
   gameStarted.value = false
   currentPoints.value = 0
 }
-
 const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : false))
 </script>
 <template>
@@ -309,8 +312,8 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
           <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% mt-2px px-12px">доп.сек</p>
         </div>
       </div>
-    </div> -->
-    <!-- <div v-if="question.meta && question.meta.easy" class="flex items-center scale-90 sm:hidden w-full justify-between" :class="{ 'pointer-events-none!': answerEmitting }">
+    </div>
+    <div v-if="question.meta && question.meta.easy" class="flex items-center scale-90 sm:hidden w-full justify-between" :class="{ 'pointer-events-none!': answerEmitting }">
       <div @click="goToStart" class="timer bg-white lt-xxxl:h-55px! w-unset! q-shadow-sm p-25px! w-98px! h-82px! px-12px! cursor-pointer">
         <img src="/img/logo.svg" class="w-46px h-30px" />
       </div>
@@ -330,7 +333,7 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
         { 'max-h-[calc(90vh-50px)]': !cardHaveImage },
         { 'supercard-wrapper': question.type === 'VALUE' },
       ]">
-      <div class="easy-card_header" v-if="question.meta && question.meta.easy">
+      <div class="easy-card_header" v-if="question.meta && question.meta.easy && windowWidth <= 900">
         <div @click="goToStart" class="lt-xxxl:h-55px! w-unset! w-98px! h-82px! cursor-pointer flex items-center justify-center logo">
           <img src="/img/logo.svg" class="w-46px h-30px" />
         </div>
@@ -339,10 +342,10 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
           <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% mt-2px">баллы</p>
         </div>
       </div>
-      <div v-if="question.meta && !question.meta.easy" class="hard-card_header" style="gap: 20px">
+      <div v-if="question.meta && !question.meta.easy && windowWidth <= 900" class="hard-card_header" style="gap: 20px">
         <div class="lt-xxxl:h-55px! lt-xxxl:max-w-50vw timer lt-xxxl:p-10px!">
           <img class="w-24px h-24px lt-xxxl:w-18px lt-xxxl:h-18px" src="/img/clock.png" />
-          <div class="time lt-xxxl:h-13px! lt-xxxl:w-90%! lt-xxxl:min-w-80%! bg-#D1EAD8!">
+          <div class="time lt-xxxl:h-13px! lt-xxxl:w-90%! lt-xxxl:min-w-70%! bg-#D1EAD8!">
             <div v-if="question.type !== 'VALUE'" class="inner h-full bg-#71CB8A trs" :style="`width: ${100 - (100 * time) / totalTime}%`"></div>
             <div v-else class="inner h-full bg-#71CB8A trs" :style="`width: ${100 - (100 * time) / totalGameTime}%`"></div>
           </div>
@@ -354,19 +357,20 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
           </p>
         </div>
         <!-- <div class="gap-1vw sm:gap-2vw flex"> -->
-
-        <div v-if="question.type !== 'VALUE'" class="w-98px lt-xxxl:w-76px lt-xxxl:h-55px! py-12px flex flex-col items-center">
-          <p class="text-22px lt-xxxl:text-16px font-500 text-#1E2947 leading-130%">+{{ totalGameTime }}</p>
-          <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% px-12px">доп.сек</p>
-        </div>
-        <div class="w-98px lt-xxxl:w-76px lt-xxxl:h-55px! py-12px flex flex-col items-center">
-          <p class="text-22px lt-xxxl:text-16px font-500 text-#1E2947 leading-130%">{{ currentPoints }}</p>
-          <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130%">баллы</p>
+        <div class="flex justify-end">
+          <div v-if="question.type !== 'VALUE'" class="w-98px lt-xxxl:w-56px lt-xxxl:h-55px! py-12px flex flex-col items-center">
+            <p class="text-22px lt-xxxl:text-16px font-500 text-#1E2947 leading-130%">+{{ totalGameTime }}</p>
+            <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% px-12px lt-xxxl:px-0px">доп.сек</p>
+          </div>
+          <div class="w-98px lt-xxxl:w-56px lt-xxxl:h-55px! py-12px flex flex-col items-center">
+            <p class="text-22px lt-xxxl:text-16px font-500 text-#1E2947 leading-130%">{{ currentPoints }}</p>
+            <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% lt-xxxl:px-0px">баллы</p>
+          </div>
         </div>
       </div>
 
-      <!-- <div v-if="question.meta && !question.meta.easy" class="flex lt-sm:hidden justify-between">
-        <div class="timer bg-white lt-xxxl:h-55px! lt-xxxl:max-w-310px q-shadow-sm lt-xxxl:p-10px!">
+      <div v-if="question.meta && !question.meta.easy && windowWidth > 900" class="flex lt-sm:hidden justify-between">
+        <div class="timer bg-white lt-xxxl:h-55px! lt-xxxl:max-w-310px q-shadow-sm lt-xxxl:p-10px!" style="border: 2px solid #c9c9c9">
           <img class="w-24px h-24px lt-xxxl:w-18px lt-xxxl:h-18px" src="/img/clock.png" alt="таймер" />
           <div class="time lt-xxxl:h-13px! lt-xxxl:w-220px! lt-xxxl:min-w-220px! bg-#D1EAD8!">
             <div v-if="question.type !== 'VALUE'" class="inner h-full bg-#71CB8A trs" :style="`width: ${85 - (85 * time) / totalTime}%`"></div>
@@ -390,9 +394,9 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
             <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% mt-2px px-12px">доп.сек</p>
           </div>
         </div>
-      </div> -->
-      <!-- <div v-if="question.meta && question.meta.easy" class="flex items-center lt-sm:hidden">
-        <div @click="goToStart" class="timer bg-white lt-xxxl:h-55px! q-shadow-sm p-25px! max-w-98px! h-82px! cursor-pointer relative pb-6px">
+      </div>
+      <div v-if="question.meta && question.meta.easy && windowWidth > 900" class="flex items-center lt-sm:hidden">
+        <div @click="goToStart" class="timer bg-white lt-xxxl:h-55px! q-shadow-sm p-25px! max-w-98px! h-82px! cursor-pointer relative pb-6px" style="border: 2px solid #c9c9c9">
           <img src="/img/logo.svg" class="w-46px h-30px" />
         </div>
         <div class="flex-1"></div>
@@ -400,10 +404,10 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
           <p class="text-22px lt-xxxl:text-16px font-500 text-#1E2947 leading-130%">{{ currentPoints }}</p>
           <p class="text-18px lt-xxxl:text-14px text-#C9C9C9 leading-130% mt-2px">баллы</p>
         </div>
-      </div> -->
+      </div>
       <div class="">
         <template v-if="question.meta" class="cardInside">
-          <div class="flex flex-col mt-30px mb-12px lt-2xl:mb-20px lt-sm:mt-0!">
+          <div class="flex flex-col mb-12px lt-2xl:mb-20px lt-sm:mt-0! mt-30px">
             <p v-if="question.type !== 'VALUE'" class="font-500 text-18px lt-xxxl:text-14px text-#A5A9B5">{{ questionNumber }} вопрос из 10</p>
             <p v-else class="font-500 text-18px lt-xxxl:text-14px text-#A5A9B5">Суперигра</p>
             <p v-html="question.meta.title" class="text-36px lt-sm:text-18px lt-md:text-22px font-700 leading-130% mt-16px title"></p>
@@ -417,7 +421,7 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
               </p>
             </div>
             <p v-if="question.meta.comment" v-html="question.meta.comment" class="font-500 text-26px lt-sm:text-17px leading-130% text-#1E2947 mt-20px lt-sm:mt-20px subtitle"></p>
-            <p v-else class="font-500 text-26px lt-md:text-18px lt-sm:text-14px leading-130% text-#1E2947 mt-20px lt-sm:mt-18px">Выберите Ответ</p>
+            <p v-else class="font-500 text-20px lt-md:text-18px lt-sm:text-14px leading-130% text-#1E2947 mt-20px lt-sm:mt-18px" style="font-weight: 500 !important">Выберите Ответ</p>
           </div>
           <!-- TODO: переносы -->
           <div v-if="question.type === 'DEFAULT'" class="flex flex-wrap gap-16px subtitle" :class="{ 'mt-20px!': question.meta && question.meta.comment }">
@@ -521,19 +525,19 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
         <div class="absolute bottom-0 left-50% translate-x-[-50%] z-1010101001">
           <img class="absolute right-[-35%] lt-lg:right-[-15%] lt-lg:bottom-50% bottom-0 z-1 w-700px lt-lg:w-500px" src="/img/characters/pushkin-bg.png" />
           <div
-            class="flex lt-sm:flex-col h-full lt-lg:max-h-166px! lt-sm:max-h-310px! lt-lg:min-h-166px items-center justify-between p-55px lt-lg:p-36px! gap-x-44px w-886px max-w-screen! lt-lg:w-672px min-h-223px relative z-2"
+            class="flex lt-sm:flex-col h-full lt-lg:max-h-166px! lt-sm:max-h-310px! lt-lg:min-h-166px justify-between p-55px lt-lg:p-36px! gap-x-44px w-886px max-w-screen! lt-lg:w-672px min-h-223px relative z-2"
             :class="[{ 'bg-#D1EAD8': !superGameError }, { 'bg-#FFEAE7': superGameError }]">
             <div class="translate-y--10px">
               <p class="text-#08882C font-500 text-36px sm:text-30px lt-lg:text-30px leading-130%" :class="{ 'text-#C01E00': superGameError }">
                 {{ !superGameError ? 'Красавчик!' : 'Правильный ответ:' }}
               </p>
               <p v-if="question.meta && question.meta.comment" class="text-26px leading-130% mt-18px lt-lg:text-18px lt-lg:mt-11px">
-                <span v-for="(letter, idx) in question.meta.value">{{ letter.answer }}</span> — {{ question.meta.comment }}
+                <span v-for="(letter, idx) in question.meta.value" :class="{ capitalize: idx === 0 }">{{ letter.answer }}</span> — {{ question.meta.comment }}
               </p>
             </div>
             <button
               @click="startResultCount"
-              class="p-22px w-332px lt-sm:p-10px lt-xxxl:p-16px text-center lt-sm:mt-24px lt-sm:h-40px flex items-center max-w-82vw justify-center justify-items-center content-center items-center translate-y--11px"
+              class="p-22px w-332px lt-sm:p-10px lt-xxxl:p-16px text-center lt-sm:mt-24px lt-sm:h-40px flex items-center max-w-82vw justify-center justify-items-center content-center items-center translate-y--11px result-button"
               :class="[
                 { 'bg-white q-shadow-sm__light-green text-#08882C border-1px border-#08882C': !superGameError },
                 { 'bg-#FFEAE7! q-shadow-sm__red text-#C01E00 border-1px border-#C01E00': superGameError },
@@ -568,9 +572,20 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
   </div>
 </template>
 <style lang="scss" scoped>
+.result-button {
+  @media (max-width: 450px) {
+    max-width: 180px !important;
+    max-height: 44px;
+    height: 44px;
+    margin-top: 18px;
+  }
+}
+.capitalize {
+  text-transform: uppercase;
+}
 .card-wrapper {
-  margin-top: 5svh;
   @media (max-width: 740px) {
+    margin-top: 5svh;
     align-self: flex-start;
   }
 }
