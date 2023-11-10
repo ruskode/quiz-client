@@ -281,7 +281,7 @@ const goToStart = () => {
 const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : false))
 </script>
 <template>
-  <div class="flex flex-col w-screen items-center relative z-1 card-wrapper" style="max-height: var(--doc-height)">
+  <div class="flex flex-col w-screen items-center relative z-1 card-wrapper" style="max-height: var(--doc-height)" :class="{ 'supercard-wrapper': question.type === 'VALUE' }">
     <!-- <div v-if="question.meta && !question.meta.easy" class="flex items-center scale-90 sm:hidden w-100%" :class="{ 'pointer-events-none!': answerEmitting }">
       <div class="timer bg-white lt-xxxl:h-55px! lt-xxxl:max-w-310px q-shadow-sm lt-xxxl:p-10px!">
         <img class="w-24px h-24px lt-xxxl:w-18px lt-xxxl:h-18px" src="/img/clock.png" alt="таймер" />
@@ -328,9 +328,10 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
         { 'pointer-events-none!': answerEmitting },
         { fullvhcard: cardHaveImage },
         { 'max-h-[calc(90vh-50px)]': !cardHaveImage },
+        { 'supercard-wrapper': question.type === 'VALUE' },
       ]">
       <div class="easy-card_header" v-if="question.meta && question.meta.easy">
-        <div @click="goToStart" class="lt-xxxl:h-55px! w-unset! w-98px! h-82px! cursor-pointer flex items-center justify-center">
+        <div @click="goToStart" class="lt-xxxl:h-55px! w-unset! w-98px! h-82px! cursor-pointer flex items-center justify-center logo">
           <img src="/img/logo.svg" class="w-46px h-30px" />
         </div>
         <div class="w-98px lt-xxxl:w-76px lt-xxxl:h-55px! py-12px flex flex-col items-center justify-center">
@@ -476,7 +477,7 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
             </div>
             <div class="flex flex-wrap gap-16px mt-18px lt-lg:mt-0 lt-lg:flex-col lt-lg:w-[calc(100%/2-4px)]">
               <div
-                class="bg-white border-1px border-dashed border-#1E2947 h-74px max-w-334px! lt-lg:max-h-60px! w-[calc(100%/3-12px)]! lt-lg:w-full! cursor-grab! flex items-center justify-center lt-sm:max-h-38px! lt-sm:py-12px lt-sm:px-10px position-card_slot"
+                class="bg-white border-1px border-dashed border-#1E2947 h-74px max-w-334px! lt-sm:max-h-58.2px! w-[calc(100%/3-12px)]! lt-lg:w-full! cursor-grab! flex items-center justify-center lt-sm:py-12px lt-sm:px-10px"
                 :class="[
                   { 'q-answer q-shadow-sm': positionAnswers[zone - 1] },
                   {
@@ -493,7 +494,8 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
                 draggable="true"
                 @dragstart="dragStart(positionAnswers[zone - 1], zone - 1, $event)"
                 @click="stickerDrag(zone - 1, $event)">
-                <p class="text-20px lt-xxxl:text-18px lt-sm:py-12px lt-sm:px-10px lt-sm:text-14px leading-23px text-center pointer-events-none">
+                <p
+                  class="ext-20px lt-xxxl:text-18px lt-sm:text-14px leading-26px text-center py-22px px-18px lt-sm:px-10px lt-sm:py-14px w-full pointer-events-none pointer-events-none position-card_slot">
                   {{ positionAnswers[zone - 1] ? positionAnswers[zone - 1].meta.title : '' }}
                 </p>
               </div>
@@ -567,9 +569,15 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
 </template>
 <style lang="scss" scoped>
 .card-wrapper {
-  margin-top: 4svh;
+  margin-top: 5svh;
   @media (max-width: 740px) {
     align-self: flex-start;
+  }
+}
+.supercard-wrapper {
+  @media (max-width: 740px) {
+    height: calc(var(--doc-height) - 5svh - 15px);
+    max-height: none !important;
   }
 }
 .easy-card {
@@ -588,13 +596,16 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
 }
 .position-card {
   &_question {
-    max-height: 74px !important;
-    @media (max-width: 400px) {
+    max-height: unset !important;
+    @media (max-width: 571px) {
       padding: 14px 0 !important;
     }
   }
   &_slot {
-    max-height: 74px !important;
+    max-height: 52.2px !important;
+    @media (max-width: 571px) {
+      padding: 14px 0 !important;
+    }
   }
 }
 .title {
@@ -649,6 +660,13 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
 
   .inner {
     transition: all 0.05s;
+  }
+}
+.logo {
+  @media (max-width: 500px) {
+    width: 32px !important;
+    height: 32px !important;
+    align-items: flex-start !important;
   }
 }
 
@@ -719,12 +737,6 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
     * {
       transform: scale(0.9, 0.8);
     }
-  }
-}
-
-.fullvhcard {
-  @media (max-height: 844px) and (max-width: 600px) {
-    min-height: 88.8vh !important;
   }
 }
 </style>
