@@ -17,9 +17,7 @@
 </script>
 
 <template>
-	<div class="flex flex-col h-100vh overflow-hidden">
-		<!-- <TheHeader /> -->
-		<!-- <pre>{{ isMobile }} lndsc:{{ lndsc }}</pre> -->
+	<div class="flex flex-col overflow-hidden" style="height: var(--doc-height)">
 		<RouterView v-show="!isMobile || !lndsc" class="overflow-hidden" />
 		<div v-show="isMobile && lndsc" class="flex flex-col h-full w-full items-center justify-center p-20px text-center relative">
 			<p class="relative z-2 bg-white">

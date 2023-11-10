@@ -281,7 +281,7 @@ const goToStart = () => {
 const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : false))
 </script>
 <template>
-  <div class="flex flex-col w-screen items-center max-h-100vh relative z-1 card-wrapper">
+  <div class="flex flex-col w-screen items-center relative z-1 card-wrapper" style="max-height: var(--doc-height)">
     <!-- <div v-if="question.meta && !question.meta.easy" class="flex items-center scale-90 sm:hidden w-100%" :class="{ 'pointer-events-none!': answerEmitting }">
       <div class="timer bg-white lt-xxxl:h-55px! lt-xxxl:max-w-310px q-shadow-sm lt-xxxl:p-10px!">
         <img class="w-24px h-24px lt-xxxl:w-18px lt-xxxl:h-18px" src="/img/clock.png" alt="таймер" />
