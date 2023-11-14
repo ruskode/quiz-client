@@ -414,7 +414,7 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
             <div class="relative">
               <img
                 v-if="question.meta.image && question.type !== 'POSITION'"
-                class="w-full h-20vh lt-sm:h-136px lt-md:h-168px object-cover q-shadow-sm mt-24px lt-sm:mt-14px"
+                class="w-full h-20vh min-h-260px lt-sm:min-h-170px lt-sm:h-136px lt-md:h-168px object-cover q-shadow-sm mt-24px lt-sm:mt-14px"
                 :src="`https://api.рускод.рф/${question.meta.image}`" />
               <p class="absolute bottom-14px lt-sm:left-8px lt-sm:bottom-8px lt-sm:right-unset right-14px text-white text-14px lt-sm:text-8px leading-130%" v-if="question.meta.imageComment">
                 {{ question.meta.imageComment }}
@@ -506,7 +506,7 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
             </div>
             <div class="flex flex-wrap gap-16px lt-lg:gap-6px mt-18px w-full">
               <div
-                class="bg-white q-answer w-[calc(100%/3-12px)]! lt-lg:w-[calc(100%/2-3px)]! hover:scale-100! lt-lg:border-none cursor-grab lt-sm:max-h-38px"
+                class="bg-white q-answer w-[calc(100%/3-12px)]! lt-lg:w-[calc(100%/2-3px)]! hover:scale-100! lt-lg:border-none cursor-grab lt-sm:max-h-40px"
                 v-for="(answer, index) in question.answers"
                 draggable="true"
                 @dragend="dragEnd(answer.id, $event)"
@@ -525,9 +525,9 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
         <div class="absolute bottom-0 left-50% translate-x-[-50%] z-1010101001">
           <img class="absolute right-[-35%] lt-lg:right-[-15%] lt-lg:bottom-50% bottom-0 z-1 w-700px lt-lg:w-500px" src="/img/characters/pushkin-bg.png" />
           <div
-            class="flex lt-sm:flex-col h-full lt-lg:max-h-166px! lt-sm:max-h-310px! lt-lg:min-h-166px justify-between p-55px lt-lg:p-36px! gap-x-44px w-886px max-w-screen! lt-lg:w-672px min-h-223px relative z-2"
+            class="flex lt-sm:flex-col h-full lt-lg:max-h-166px! lt-sm:max-h-310px! lt-lg:min-h-166px justify-between p-55px lt-lg:p-36px! gap-x-44px w-886px max-w-screen! lt-lg:w-672px min-h-223px relative z-2 result"
             :class="[{ 'bg-#D1EAD8': !superGameError }, { 'bg-#FFEAE7': superGameError }]">
-            <div class="translate-y--10px">
+            <div class="translate-y--10px result-text">
               <p class="text-#08882C font-500 text-36px sm:text-30px lt-lg:text-30px leading-130%" :class="{ 'text-#C01E00': superGameError }">
                 {{ !superGameError ? 'Красавчик!' : 'Правильный ответ:' }}
               </p>
@@ -572,13 +572,22 @@ const cardHaveImage = computed(() => (props?.question?.meta?.image ? true : fals
   </div>
 </template>
 <style lang="scss" scoped>
-.result-button {
-  @media (max-width: 450px) {
-    max-width: 180px !important;
-    max-height: 44px;
-    height: 44px;
-    margin-top: 18px;
+.result {
+  &-text {
+    max-width: 440px;
   }
+  &-button {
+    max-height: 55px !important;
+    align-self: center;
+    @media (max-width: 450px) {
+      max-width: 180px !important;
+      max-height: 44px;
+      height: 44px;
+      margin-top: 18px;
+    }
+  }
+}
+.result-button {
 }
 .capitalize {
   text-transform: uppercase;

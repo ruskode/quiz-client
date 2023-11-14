@@ -2,6 +2,10 @@
 const store = useMainStore()
 const { currentQuestionNumber, currentQuestion, currentPoints, totalGameTime, isSuperGame, gameStarted } = storeToRefs(store)
 
+useHead({
+  title: 'Время вышло',
+})
+
 const router = useRouter()
 
 const goToStart = () => {
@@ -42,9 +46,12 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
   background-size: cover;
   &_bfuLogo {
     position: fixed;
-    top: 36px;
-    right: 3%;
+    top: 40px;
+    right: 40px;
+    z-index: 1000;
     color: white;
+    cursor: pointer;
+    height: 43px;
   }
   &_timeout {
     position: absolute;
@@ -106,9 +113,9 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
       &_button {
         //   padding: 20px;
         margin-top: 32px;
-        width: 360px;
-        height: 68px;
-        padding: 16px 0;
+        width: 260px;
+        height: 60px;
+        padding: 0px 0 !important;
         text-align: center;
         &-title {
           font-size: 20px;
@@ -194,6 +201,9 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
   }
 }
 @media (max-width: 1450px) {
+  .final_bfuLogo {
+    height: 28px;
+  }
   .final_timeout_window {
     width: 41vw !important;
     padding: 7%;
@@ -665,26 +675,13 @@ const phraseToUse = titlePhrase[Math.floor(Math.random() * titlePhrase.length)]
 //     // translate: 84.5% -84.5%;
 //   }
 // }
-// @media (max-width: 576px) {
-//   .final_timeout_window {
-//     width: 65vw;
-//     display: flex;
-//     justify-content: space-around;
-//   }
-//   .final_timeout_window_title {
-//     font-size: 23px;
-//   }
-//   .final_timeout_window_description {
-//     font-size: 16px;
-//   }
-//   .final_timeout_pusskin-full {
-//     width: 65vw;
-//   }
-//   .final_timeout_pusskin-hand {
-//     // width: 14vw;
-//     // translate: 78% -84.5%;
-//   }
-// }
+@media (max-width: 580px) {
+  .final_bfuLogo {
+    top: 12px;
+    right: 21px;
+    height: 21px;
+  }
+}
 @media (max-width: 450px) {
   .final_bfuLogo {
     transform: scale(0.75) translateX(-60%);
